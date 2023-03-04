@@ -9,13 +9,16 @@ os.chdir(root_dir)
 junk = 'junk'
 try:
 	os.mkdir(junk)
-except:
+except FileExistsError:
 	junk += str(randint(1,1000000))
 	try:
 		os.mkdir(junk)
-	except:
+	except FileExistsError:
 		junk += str(randint(0,9))
 		os.mkdir(junk)
+except PermissionError:
+	print("It seems you don't have any permissions here")
+	quit()
 for root, dirs, files in os.walk("."):
 	for file in files:
 		if file.endswith((".png", ".jpg", "jpeg", ".jfif", ".pjpeg", ".pjp", ".bmp", ".tif", ".tiff")):
